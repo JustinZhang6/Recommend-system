@@ -14,7 +14,7 @@
 
 2. 运行代码
    eg：
-   python usercf.py
+   python user_cf.py
 
 # 注意事项
 UserCF算法中，由于用户数量多，生成的相似性矩阵也大，会占用比较多的内存，不过一般电脑都没问题。
