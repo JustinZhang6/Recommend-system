@@ -1,4 +1,4 @@
-# MovieLens-RecSys
+# Recommend-system
 基于Movielens-1M数据集实现的User Based Collaborative Filtering和Item Based Collaborative Filtering推荐算法
 
 # 简介
