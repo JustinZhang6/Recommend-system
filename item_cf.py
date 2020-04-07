@@ -104,15 +104,22 @@ class ItemBasedCF(object):
         return sorted(rank.items(), key=itemgetter(1), reverse=True)[:N]
 
     def prediction(self, user):
-        ''' Predict all movie for user based on user watched '''
+        ''' Predict all movie for user based on user watched
+
+         :return rank: { m1:rating1, m2:rating2, ...} 对于用户user所有未打分的电影的预测分值
+         '''
         rank = {}
         watched_movies = self.trainset[user]
         for movie, rating in watched_movies.items():
             for other_movie, similarity in self.movie_simmat[movie].items():
                 if other_movie in watched_movies:
                     continue
-                rank[other_movie] = rank.get(
-                    other_movie, 0) + similarity % rating
+                rank[other_movie] = rank.get(other_movie, 0) + similarity * rating
+        len_ = len(watched_movies)
+        if len_ !=0 :
+            for m, rating in rank.items():
+                # print(m,rating,type(m),type(rating),len_)
+                rank[m] = 5 * rating / len_     # 乘以5 是因为评分是0-5的，不然算出来是个0-1 左右的值
         return rank
 
     def evalute_recommend(self):
@@ -152,26 +159,28 @@ class ItemBasedCF(object):
             test_movie_score = self.testset.get(user, {})
             rec_movie_score = self.prediction(user)
             for m, real_score in test_movie_score.items():
-                temp = real_score - rec_movie_score.get(m, 0)
+                temp = rec_movie_score.get(m, 0) - real_score
                 eval_count += 1
                 MSE += temp**2
+                if eval_count % 1000 == 0:
+                    print('eval_count(%d) user:%s to movie %s, real_score:%f, predict_score:%f, error:%f'%(eval_count,user,m,real_score,rec_movie_score.get(m,0),temp))
         MSE /= eval_count
         print('MSE = %.4f' % MSE)
 
 
 def main():
-    print('*'*10,'Item-based collaborative filtering algorithm','*'*10)
+    print('*'*20,'Item-based collaborative filtering algorithm','*'*20)
     itemcf = ItemBasedCF()
-    itemcf.data_process('./ratings.dat', 0.8)
+    itemcf.data_process('./ratings.dat', p=0.8)
     time_s = time.time()
     itemcf.calculate_movie_sim()
     time_m = time.time()
-    itemcf.evalute_recommend()
+    # itemcf.evalute_recommend()
     time_er = time.time()
     itemcf.evalute_prediction()
     time_ep = time.time()
     print('Time spent calculating is:',time_m - time_s)
-    print('Time spent on recommendations:',time_er - time_m)
+    # print('Time spent on recommendations:',time_er - time_m)
     print('Time spend predicting is:',time_ep - time_er)
 
 if __name__ == '__main__':

@@ -154,29 +154,31 @@ class UserBasedCF(object):
         for i, user in enumerate(self.testset):
             if i % 500 == 0:
                 print('Prediction for %d users in testset.' % i)
-            test_movie_score = self.testset.get(user, {})
-            rec_movie_score = self.prediction(user)
+            test_movie_score = self.testset.get(user, {})   # 获得用户user 所有待预测的movie 及其real_score
+            rec_movie_score = self.prediction(user) # 预测user 对所有未评分的电影的分值
             for m, real_score in test_movie_score.items():
-                temp = real_score - rec_movie_score.get(m, 0)
+                temp = rec_movie_score.get(m, 0) - real_score
                 eval_count += 1
                 MSE += temp ** 2
+                if eval_count % 1000 == 0:
+                    print('eval_count(%d) user:%s to movie %s, real_score:%f, predict_score:%f, error:%f'%(eval_count,user,m,real_score,rec_movie_score.get(m,0),temp))
         MSE /= eval_count
         print('MSE = %.4f' % MSE)
 
 
 def main():
-    print('*' * 10, 'User-based collaborative filtering algorithm', '*' * 10)
+    print('*' * 20, 'User-based collaborative filtering algorithm', '*' * 20)
     usercf = UserBasedCF()
-    usercf.data_process('./ratings.dat', 0.8)
+    usercf.data_process('./ratings.dat', p=0.8)
     time_s = time.time()
     usercf.calculate_user_sim()
     time_m = time.time()
-    usercf.evalute_recommend()
+    # usercf.evalute_recommend()
     time_er = time.time()
     usercf.evalute_prediction()
     time_ep = time.time()
     print('Time spent calculating is:', time_m - time_s)
-    print('Time spent on recommendations:', time_er - time_m)
+    # print('Time spent on recommendations:', time_er - time_m)
     print('Time spend predicting is:', time_ep - time_er)
 
 
