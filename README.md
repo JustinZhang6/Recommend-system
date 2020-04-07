@@ -25,9 +25,9 @@
    python user_cf.py
 
 # 注意事项
-电影推荐结果并未保留，如果需要此部分数据可自行修改代码。
+电影推荐结果可能被注释掉了，如果需要此部分数据可自行修改代码。
 
-UserCF算法中，由于用户数量多，生成的相似性矩阵也大，会占用比较多的内存，不过一般电脑都没问题。
+UserCF算法中，由于用户数量多，生成的相似性矩阵也大，会占用比较多的内存。
 
 ItemCF算法中，每次推荐都需要找出一个用户的所有电影，再为每一部电影找出最相似的电影，运算量比UserCF大，因此推荐的过程比较慢。
 
@@ -72,6 +72,12 @@ ItemCF算法中，每次推荐都需要找出一个用户的所有电影，再�
 产品冷启动问题：
 * 基于内容的方法
 * 基于专家的方法<br>
+### 两者应用分析
+
+针对新闻类网站，可以采用UserCF。因为用户大都关注热门新闻，个性化要求不强，热门程度和实效性是推荐的重点；ItemCF需要维护一张物品相似度表，当物品更新速度较快时，表的维护成本太高。
+
+针对电商、音乐、图书类网站，可以采用ItemCF。因为用户的兴趣喜好相对稳定，个性化要求较高，同时对实效性要求不高。
+   ![cf_comp.jpg](https://github.com/JustinZhang6/Recommend-system/blob/master/image/cf_comp.jpg)
 
 ## 基于模型的方法
 往往需要很大的算力，在线下预处理，在预测的时候可以直接基于模型预测。<br>
@@ -82,6 +88,12 @@ ItemCF算法中，每次推荐都需要找出一个用户的所有电影，再�
 * 基于机器学习的方法
 * 基于深度学习的方法<br>
 
+### SVD 及其部分变形
+   ![svd1.jpg](https://github.com/JustinZhang6/Recommend-system/blob/master/image/svd1.jpg)<br>
+   ![svd2.jpg](https://github.com/JustinZhang6/Recommend-system/blob/master/image/svd2.jpg)<br>
 # 参考资料
    相关课件<br>
-   https://github.com/Lockvictor/MovieLens-RecSys
+   https://github.com/Lockvictor/MovieLens-RecSys<br>
+   https://www.cnblogs.com/lzllovesyl/p/5243370.html<br>
+   https://blog.csdn.net/zhongkejingwang/article/details/43053513<br>
+   https://blog.csdn.net/zhongkejingwang/article/details/43083603<br>
