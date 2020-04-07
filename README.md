@@ -4,8 +4,8 @@
 # 实现算法
    User Based Collaborative Filtering（基于User的协同过滤）<br>
    Item Based Collaborative Filtering（基于Item的协同过滤）<br>
+   矩阵分解<br>
    基于内容的推荐算法 （进行中）<br>
-   矩阵分解（进行中）<br>
    
 # 数据集
    Movielens 1M数据集[ml-1m.zip](http://files.grouplens.org/datasets/movielens/ml-1m.zip)
