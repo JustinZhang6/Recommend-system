@@ -171,7 +171,7 @@ class ItemBasedCF(object):
 def main():
     print('*'*20,'Item-based collaborative filtering algorithm','*'*20)
     itemcf = ItemBasedCF()
-    itemcf.data_process('./ratings.dat', p=0.8)
+    itemcf.data_process('./Data_raw/ml-1m/ratings.dat', p=0.8)
     time_s = time.time()
     itemcf.calculate_movie_sim()
     time_m = time.time()

@@ -174,7 +174,7 @@ class SVD(object):
 def main():
     print('*' * 20, 'Recommendation algorithm based on SVD', '*' * 20)
     svd = SVD(simMeas=cosSim)
-    svd.bd_mat('./ratings.dat', p=0.8)
+    svd.bd_mat('./Data_raw/ml-1m/ratings.dat', p=0.8)
     svd.bd_kmat(percentage=0.8)
     svd.evalute()
     # svd.recommend(user=1) # 测试预测

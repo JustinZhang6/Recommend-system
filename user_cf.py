@@ -169,7 +169,7 @@ class UserBasedCF(object):
 def main():
     print('*' * 20, 'User-based collaborative filtering algorithm', '*' * 20)
     usercf = UserBasedCF()
-    usercf.data_process('./ratings.dat', p=0.8)
+    usercf.data_process('./Data_raw/ml-1m/ratings.dat', p=0.8)
     time_s = time.time()
     usercf.calculate_user_sim()
     time_m = time.time()
