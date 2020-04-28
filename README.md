@@ -91,6 +91,15 @@ ItemCF算法中，每次推荐都需要找出一个用户的所有电影，再�
 ### SVD 及其部分变形
    ![svd1.jpg](https://github.com/JustinZhang6/Recommend-system/blob/master/image/svd1.jpg)<br>
    ![svd2.jpg](https://github.com/JustinZhang6/Recommend-system/blob/master/image/svd2.jpg)<br>
+   
+## 基于神经网络的协同推荐
+
+NeuralCF模型实际上提出了一个模型框架，它基于用户向量和物品向量这两个Embedding层，利用不同的互操作层进行特征的交叉组合，并且可以灵活地进行不同互操作层的拼接。从这里可以看出深度学习构建推荐模型的优势----利用神经网络理论上能够拟合任意函数的能力，灵活地组合不同的特征，按需增加或减少模型的复杂度。
+
+NeuralCF模型也存在局限性。由于是基于协同过滤的思想进行改造的，所以NeuralCF模型并没有引入更多其他类型的特征，这在实际应用中无疑浪费了其他有价值的信息。此外，对于模型中互操作的种类并没有做进一步的探究和说明。这都需要后来者进行更深入的探索。
+
+详细可见论文解析 https://zhuanlan.zhihu.com/p/131274333
+
 # 参考资料
    相关课件<br>
    https://github.com/Lockvictor/MovieLens-RecSys<br>
