@@ -107,7 +107,8 @@ NeuralCF模型实际上提出了一个模型框架，它基于用户向量和物
 NeuralCF模型也存在局限性。由于是基于协同过滤的思想进行改造的，所以NeuralCF模型并没有引入更多其他类型的特征，这在实际应用中无疑浪费了其他有价值的信息。此外，对于模型中互操作的种类并没有做进一步的探究和说明。这都需要后来者进行更深入的探索。
 
 原理详细可见论文解析 https://zhuanlan.zhihu.com/p/131274333<br>
-代码说明：<br>
+
+###代码说明：<br>
 代码参考了原论文作者的代码实现，[库地址](https://github.com/hexiangnan/neural_collaborative_filtering)<br>
 models目录中包含性能最佳的GMF和MLP模型。<br>
 data_proc.py 包含了如何为实验准备数据。<br>
@@ -130,8 +131,7 @@ python MLP.py --batch_size 256 --lr 0.01 --layers "[64, 32, 16]" --epochs 30
 python MLP.py --batch_size 256 --lr 0.01 --layers "[128, 64, 32]" --epochs 30
 python MLP.py --batch_size 256 --lr 0.01 --layers "[256, 128, 64]" --epochs 30
 python NeuralMF.py --batch_size 1024 --lr 0.001 --n_emb 32 --layers "[128, 64, 32]" --mf_pretrain "pytorch_GMF_bs_256_lr_0001_n_emb_32.pt" --mlp_pretrain "pytorch_MLP_bs_256_reg_00_lr_001_n_emb_64_ll_32_dp_wodp.pt"  --learner "SGD" --epochs 10
-python NeuralMF.py --batch_size 1024 --lr 0.001 --n_emb 32 --layers "[128, 64, 32]"  --mf_pretrain "pytorch_GMF_bs_256_lr_0001_n_emb_32.pt" 
- --mlp_pretrain "pytorch_MLP_bs_256_reg_00_lr_001_n_emb_64_ll_32_dp_wodp.pt"  --freeze 1 --learner "SGD" --epochs 10
+python NeuralMF.py --batch_size 1024 --lr 0.001 --n_emb 32 --layers "[128, 64, 32]"  --mf_pretrain  "pytorch_GMF_bs_256_lr_0001_n_emb_32.pt"  --mlp_pretrain "pytorch_MLP_bs_256_reg_00_lr_001_n_emb_64_ll_32_dp_wodp.pt"  --freeze 1 --learner "SGD" --epochs 10
 ```
 
 # 参考资料
@@ -140,4 +140,4 @@ python NeuralMF.py --batch_size 1024 --lr 0.001 --n_emb 32 --layers "[128, 64, 3
    https://www.cnblogs.com/lzllovesyl/p/5243370.html<br>
    https://blog.csdn.net/zhongkejingwang/article/details/43053513<br>
    https://blog.csdn.net/zhongkejingwang/article/details/43083603<br>
-   基于神经网络的协同推荐上更多实现和比较：https://github.com/jrzaurin/neural_cf
+   基于神经网络的协同推荐上更多pytorch外的实现或参数比较：https://github.com/jrzaurin/neural_cf
