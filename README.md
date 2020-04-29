@@ -6,6 +6,8 @@
    Item Based Collaborative Filtering（基于Item的协同过滤）<br>
    矩阵分解<br>
    基于内容的推荐算法 （进行中）<br>
+   基于神经网络的协同过滤 Neural Collaborative Filtering （包括：GMF/ MLP/ Neural MF）（都基于pytorch写的）<br>
+
    
 # 数据集
    Movielens 1M数据集[ml-1m.zip](http://files.grouplens.org/datasets/movielens/ml-1m.zip)
@@ -13,6 +15,8 @@
 # 评价指标：
    指标一：Precision、Recall、Coverage、Popularity<br>
    指标二：MSE、RMSE<br>
+   指标三：HR、NDCGM<br>
+
 
 # 运行
 
@@ -22,7 +26,11 @@
 
 2. 运行代码<br>
    eg：<br>
-   python user_cf.py
+   python item_cf.py<br>
+   python user_cf.py<br>
+   python GMF.py --batch_size 256 --lr 0.01 --n_emb 32 --epochs 30 <br>
+   
+
 
 # 注意事项
 电影推荐结果可能被注释掉了，如果需要此部分数据可自行修改代码。
@@ -98,7 +106,33 @@ NeuralCF模型实际上提出了一个模型框架，它基于用户向量和物
 
 NeuralCF模型也存在局限性。由于是基于协同过滤的思想进行改造的，所以NeuralCF模型并没有引入更多其他类型的特征，这在实际应用中无疑浪费了其他有价值的信息。此外，对于模型中互操作的种类并没有做进一步的探究和说明。这都需要后来者进行更深入的探索。
 
-详细可见论文解析 https://zhuanlan.zhihu.com/p/131274333
+原理详细可见论文解析 https://zhuanlan.zhihu.com/p/131274333<br>
+代码说明：<br>
+代码参考了原论文作者的代码实现，[库地址](https://github.com/hexiangnan/neural_collaborative_filtering)<br>
+models目录中包含性能最佳的GMF和MLP模型。<br>
+data_proc.py 包含了如何为实验准备数据。<br>
+对于Linux系统，可以采用shell命令快速进行，如：<br>
+```Bash
+source activate pytorch
+python GMF.py --batch_size 256 --lr 0.01 --n_emb 8 --epochs 30
+python GMF.py --batch_size 256 --lr 0.001 --n_emb 8 --epochs 30
+python GMF.py --batch_size 512 --lr 0.01 --n_emb 8 --epochs 30
+python GMF.py --batch_size 512 --lr 0.001 --n_emb 8 --epochs 30
+python GMF.py --batch_size 1024 --lr 0.01 --n_emb 8 --epochs 30
+python GMF.py --batch_size 1024 --lr 0.001 --n_emb 8 --epochs 30
+python MLP.py --batch_size 256 --lr 0.01 --layers "[32, 16, 8]" --epochs 30
+python MLP.py --batch_size 256 --lr 0.001 --layers "[32, 16, 8]" --epochs 30
+python MLP.py --batch_size 512 --lr 0.01 --layers "[32, 16, 8]" --epochs 30
+python MLP.py --batch_size 512 --lr 0.001 --layers "[32, 16, 8]" --epochs 30
+python MLP.py --batch_size 1024 --lr 0.01 --layers "[32, 16, 8]" --epochs 30
+python MLP.py --batch_size 1024 --lr 0.001 --layers "[32, 16, 8]" --epochs 30
+python MLP.py --batch_size 256 --lr 0.01 --layers "[64, 32, 16]" --epochs 30
+python MLP.py --batch_size 256 --lr 0.01 --layers "[128, 64, 32]" --epochs 30
+python MLP.py --batch_size 256 --lr 0.01 --layers "[256, 128, 64]" --epochs 30
+python NeuralMF.py --batch_size 1024 --lr 0.001 --n_emb 32 --layers "[128, 64, 32]" --mf_pretrain "pytorch_GMF_bs_256_lr_0001_n_emb_32.pt" --mlp_pretrain "pytorch_MLP_bs_256_reg_00_lr_001_n_emb_64_ll_32_dp_wodp.pt"  --learner "SGD" --epochs 10
+python NeuralMF.py --batch_size 1024 --lr 0.001 --n_emb 32 --layers "[128, 64, 32]"  --mf_pretrain "pytorch_GMF_bs_256_lr_0001_n_emb_32.pt" 
+ --mlp_pretrain "pytorch_MLP_bs_256_reg_00_lr_001_n_emb_64_ll_32_dp_wodp.pt"  --freeze 1 --learner "SGD" --epochs 10
+```
 
 # 参考资料
    相关课件<br>
@@ -106,3 +140,4 @@ NeuralCF模型也存在局限性。由于是基于协同过滤的思想进行改
    https://www.cnblogs.com/lzllovesyl/p/5243370.html<br>
    https://blog.csdn.net/zhongkejingwang/article/details/43053513<br>
    https://blog.csdn.net/zhongkejingwang/article/details/43083603<br>
+   基于神经网络的协同推荐上更多实现和比较：https://github.com/jrzaurin/neural_cf
